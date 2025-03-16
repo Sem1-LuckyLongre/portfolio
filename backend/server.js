@@ -7,8 +7,8 @@ const contactRoute = require("./router/contact-route");
 const connectDB = require("./utils/db");
 
 const corsOptions = {
-  origin: "https://shadowx-frontend.onrender.com",
-  methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
+  origin: "https://lucky-longre.onrender.com",
+  methods: "POST",
   credentials: true,
 };
 
