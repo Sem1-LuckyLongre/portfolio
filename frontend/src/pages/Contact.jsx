@@ -86,6 +86,7 @@ const Contact = () => {
         "https://portfolio-lucky-io1t.onrender.com/api/contact/contact",
         {
           method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formState),
         }
       );
