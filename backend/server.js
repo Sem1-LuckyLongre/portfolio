@@ -7,7 +7,7 @@ const contactRoute = require("./router/contact-route");
 const connectDB = require("./utils/db");
 
 const corsOptions = {
-  origin: "https://lucky-longre.onrender.com",
+  origin: ["https://lucky-longre.onrender.com","https://contact-showcase.vercel.app"],
   methods: "POST",
   credentials: true,
 };
