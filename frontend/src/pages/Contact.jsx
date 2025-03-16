@@ -90,8 +90,9 @@ const Contact = () => {
         }
       );
       console.log(response);
-      if(response.ok){
-        toast.success("Message Sent Successfylly")
+      if (response.ok) {
+        toast.success("Message Sent Successfylly");
+        console.log(formState);
       }
     } catch (error) {
       toast.error(error.message || "Message not sent");
