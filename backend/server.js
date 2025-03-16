@@ -7,10 +7,15 @@ const contactRoute = require("./router/contact-route");
 const connectDB = require("./utils/db");
 
 const corsOptions = {
-  origin: "https://lucky-longre.onrender.com",
-  methods: "POST",
+  origin: [
+    "https://lucky-longre.onrender.com",
+    "https://contact-showcase.vercel.app"
+  ],
+  methods: ["POST","GET"], // Ensure it's an array
   credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"], // Add if needed
 };
+
 
 app.use(cors(corsOptions));
 app.use(express.json());
