@@ -62,7 +62,7 @@ A modern, responsive developer portfolio website built with React, Vite, and Tai
    bun run dev
    ```
 
-4. Open your browser and visit `http://localhost:5173`
+4. Open your browser and visit `[lucky-longre.onrender.com](https://lucky-longre.onrender.com/)`
 
 ## 🔧 Available Scripts
 
