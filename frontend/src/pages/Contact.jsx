@@ -1,10 +1,18 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { FiSend, FiMail, FiUser, FiMessageSquare } from "react-icons/fi";
+import { FiSend, FiMail, FiUser } from "react-icons/fi";
 import ScrollAnimation from "../components/ScrollAnimation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Contact = () => {
   const [formState, setFormState] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState({
     name: "",
     email: "",
     message: "",
@@ -20,22 +28,94 @@ const Contact = () => {
       ...prev,
       [name]: value,
     }));
+
+    // Clear error when user types
+    if (errors[name]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { name: "", email: "", message: "" };
+
+    // Name validation
+    if (!formState.name.trim()) {
+      newErrors.name = "Name is required";
+      isValid = false;
+      toast.error("Name is required");
+    } else if (formState.name.trim().length < 3) {
+      newErrors.name = "Name must be at least 3 characters";
+      isValid = false;
+      toast.error("Name must be at least 3 characters");
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formState.email.trim()) {
+      newErrors.email = "Email is required";
+      isValid = false;
+      toast.error("Email is required");
+    } else if (!emailRegex.test(formState.email)) {
+      newErrors.email = "Please enter a valid email address";
+      isValid = false;
+      toast.error("Please enter a valid email address");
+    }
+
+    // Message validation
+    if (!formState.message.trim()) {
+      newErrors.message = "Message is required";
+      isValid = false;
+      toast.error("Message is required");
+    } else if (formState.message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters";
+      isValid = false;
+      toast.error("Message must be at least 10 characters");
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const submitForm = async (formState) => {
+    try {
+      const response = await fetch(
+        "https://portfolio-lucky-io1t.onrender.com/api/contact/contact",
+        {
+          method: "POST",
+          body: JSON.stringify(formState),
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      toast.error(error.message || "Message not sent");
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
 
     // Simulate form submission
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
+      // console.log(formState);
       setFormState({
         name: "",
         email: "",
         message: "",
       });
-
+      // console.log(formState);
+      submitForm(formState);
       // Reset submission status after 3 seconds
       setTimeout(() => {
         setIsSubmitted(false);
@@ -56,6 +136,8 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen pt-24 pb-16 relative overflow-hidden">
+      <ToastContainer position="top-right" autoClose={3000} />
+
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-gray-900 dark:to-indigo-950 z-0" />
 
@@ -170,10 +252,19 @@ const Contact = () => {
                         value={formState.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300"
+                        className={`w-full px-4 py-3 rounded-lg border ${
+                          errors.name
+                            ? "border-red-500 dark:border-red-500"
+                            : "border-gray-300 dark:border-gray-600"
+                        } bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300`}
                         variants={inputVariants}
                         whileFocus="focus"
                       />
+                      {errors.name && (
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.name}
+                        </p>
+                      )}
                     </div>
 
                     <div>
@@ -190,10 +281,19 @@ const Contact = () => {
                         value={formState.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300"
+                        className={`w-full px-4 py-3 rounded-lg border ${
+                          errors.email
+                            ? "border-red-500 dark:border-red-500"
+                            : "border-gray-300 dark:border-gray-600"
+                        } bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300`}
                         variants={inputVariants}
                         whileFocus="focus"
                       />
+                      {errors.email && (
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.email}
+                        </p>
+                      )}
                     </div>
 
                     <div>
@@ -210,10 +310,19 @@ const Contact = () => {
                         onChange={handleChange}
                         required
                         rows={5}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300"
+                        className={`w-full px-4 py-3 rounded-lg border ${
+                          errors.message
+                            ? "border-red-500 dark:border-red-500"
+                            : "border-gray-300 dark:border-gray-600"
+                        } bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-300`}
                         variants={inputVariants}
                         whileFocus="focus"
                       />
+                      {errors.message && (
+                        <p className="mt-1 text-sm text-red-500">
+                          {errors.message}
+                        </p>
+                      )}
                     </div>
 
                     <motion.button
