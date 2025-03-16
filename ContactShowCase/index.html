@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message Showcase</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1>Messages</h1>
+                <div class="search-stats-container">
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="searchInput" placeholder="Search messages..." aria-label="Search messages">
+                    </div>
+                    <div class="stats-container">
+                        <i class="fas fa-envelope stats-icon"></i>
+                        <span class="stats-text">Total Messages: <span id="totalMessages" class="stats-number">0</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="message-container" id="messageContainer">
+            <!-- Messages will be added here dynamically -->
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
