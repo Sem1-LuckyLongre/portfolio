@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { FiMenu, FiX } from 'react-icons/fi';
-import { FiSun, FiMoon } from 'react-icons/fi';
-import { useTheme } from '../context/ThemeContext';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { FiMenu, FiX } from "react-icons/fi";
+import { FiSun, FiMoon } from "react-icons/fi";
+// import { useTheme } from "../context/ThemeContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isDarkMode, toggleTheme } = useTheme();
+  // const { isDarkMode, toggleTheme } = useTheme();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -18,9 +18,9 @@ const Navbar = () => {
       y: 0,
       transition: {
         duration: 0.5,
-        ease: 'easeInOut'
-      }
-    }
+        ease: "easeInOut",
+      },
+    },
   };
 
   const linkVariants = {
@@ -28,28 +28,28 @@ const Navbar = () => {
       scale: 1.05,
       transition: {
         duration: 0.2,
-        ease: 'easeInOut'
-      }
-    }
+        ease: "easeInOut",
+      },
+    },
   };
 
   const mobileMenuVariants = {
     closed: {
       opacity: 0,
-      x: '100%',
+      x: "100%",
       transition: {
         duration: 0.5,
-        ease: 'easeInOut'
-      }
+        ease: "easeInOut",
+      },
     },
     open: {
       opacity: 1,
       x: 0,
       transition: {
         duration: 0.5,
-        ease: 'easeInOut'
-      }
-    }
+        ease: "easeInOut",
+      },
+    },
   };
 
   return (
@@ -60,7 +60,10 @@ const Navbar = () => {
       variants={navVariants}
     >
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+        <Link
+          to="/"
+          className="text-2xl font-bold text-indigo-600 dark:text-indigo-400"
+        >
           <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -73,14 +76,10 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-8">
           <motion.div className="flex space-x-6">
-            {['Home', 'Skills', 'Projects', 'Contact'].map((item) => (
-              <motion.div
-                key={item}
-                variants={linkVariants}
-                whileHover="hover"
-              >
+            {["Home", "Skills", "Projects", "Contact"].map((item) => (
+              <motion.div key={item} variants={linkVariants} whileHover="hover">
                 <Link
-                  to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                  to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
                   className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300"
                 >
                   {item}
@@ -103,16 +102,6 @@ const Navbar = () => {
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center space-x-4">
           <motion.button
-            onClick={toggleTheme}
-            className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
-          >
-            {isDarkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
-          </motion.button>
-          
-          <motion.button
             onClick={toggleMenu}
             className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300"
             whileHover={{ scale: 1.1 }}
@@ -131,14 +120,10 @@ const Navbar = () => {
         variants={mobileMenuVariants}
       >
         <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-          {['Home', 'Skills', 'Projects', 'Contact'].map((item) => (
-            <motion.div
-              key={item}
-              variants={linkVariants}
-              whileHover="hover"
-            >
+          {["Home", "Skills", "Projects", "Contact"].map((item) => (
+            <motion.div key={item} variants={linkVariants} whileHover="hover">
               <Link
-                to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
                 className="block py-2 text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors duration-300"
                 onClick={() => setIsOpen(false)}
               >
@@ -152,4 +137,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;
