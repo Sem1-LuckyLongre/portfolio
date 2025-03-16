@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    messages.forEach((message) => {
+    [...messages].reverse().forEach((message) => {
       const messageCard = createMessageCard(message);
       messageContainer.appendChild(messageCard);
     });
