@@ -94,6 +94,7 @@ const Contact = () => {
       if (response.ok) {
         toast.success("Message Sent Successfylly");
         console.log(formState);
+        setIsSubmitted(false);
       }
     } catch (error) {
       toast.error(error.message || "Message not sent");
